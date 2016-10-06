@@ -1,4 +1,4 @@
-import model.TravellingSalesmanProblemInstance;
+import model.Document;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -11,9 +11,9 @@ import java.io.FileReader;
  */
 public class Main {
     public static void main(String[] args) throws JAXBException, FileNotFoundException {
-        JAXBContext context = JAXBContext.newInstance(TravellingSalesmanProblemInstance.class);
+        JAXBContext context = JAXBContext.newInstance(Document.class);
         Unmarshaller um = context.createUnmarshaller();
-        TravellingSalesmanProblemInstance travellingSalesmanProblemInstance = (TravellingSalesmanProblemInstance) um.unmarshal(new FileReader("kroA100.xml"));
+        Document document = (Document) um.unmarshal(new FileReader("kroA100.xml"));
 
         String sdf;
         sdf = "dsdf";

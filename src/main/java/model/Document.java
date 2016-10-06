@@ -8,9 +8,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * Created by inf109714 on 04.10.2016.
  */
-@XmlRootElement
+@XmlRootElement(name = "travellingSalesmanProblemInstance")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class TravellingSalesmanProblemInstance {
+public class Document {
     @XmlElement
     private Graph graph;
 }
