@@ -13,7 +13,7 @@
 
   <graph>
     <vertex>
-      <edge cost="2.5">1</edge>
+      <edge cost="1.692829879225907e+03">1</edge>
       <edge cost="2.252270854049308e+03">2</edge>
       <edge cost="1.103609532398121e+03">3</edge>
       <edge cost="2.522814499720501e+03">4</edge>

@@ -13,7 +13,9 @@ public class NN {
         this.graph = graph;
     }
 
-    public void execute() {
+    public void executeAlgorithm() {
 
     }
+
+    public
 }
