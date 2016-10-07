@@ -15,10 +15,8 @@ public class Main {
         JAXBContext context = JAXBContext.newInstance(Document.class);
         Unmarshaller um = context.createUnmarshaller();
         Document document = (Document) um.unmarshal(new FileReader("kroA100.xml"));
-        document.getGraph().getVertices().forEach(vertex -> vertex.getEdges()
-                .sort((o1, o2) -> Integer.compare(o1.getCost(), o2.getCost())));
 
-        NN nn = new NN(document.getGraph());
+        NN nn = new NN(true, document.getGraph());
         nn.executeAlgorithm();
 
         System.out.println("NN");
@@ -26,5 +24,14 @@ public class Main {
         System.out.println("Avg: " + nn.getResult().getAvg());
         System.out.println("Max: " + nn.getResult().getMax());
         System.out.println(nn.getResult().getSolution());
+
+        NN graspNn = new NN(false, document.getGraph());
+        graspNn.executeAlgorithm();
+
+        System.out.println("GRASP NN");
+        System.out.println("Min: " + graspNn.getResult().getMin());
+        System.out.println("Avg: " + graspNn.getResult().getAvg());
+        System.out.println("Max: " + graspNn.getResult().getMax());
+        System.out.println(graspNn.getResult().getSolution());
     }
 }
