@@ -14,13 +14,13 @@ import java.util.stream.Collectors;
  */
 public class NN {
     private boolean isDeterministic;
-    private Graph graph;
+    private List<Vertex> vertices;
     private Result result;
 
     public NN(boolean isDeterministic, Graph graph) {
         this.isDeterministic = isDeterministic;
-        this.graph = graph;
-        graph.getVertices().forEach(vertex -> vertex.getEdges().sort((o1, o2) -> Integer.compare(o1.getCost(), o2.getCost())));
+        this.vertices = new LinkedList<>(graph.getVertices());
+        this.vertices.forEach(vertex -> vertex.getEdges().sort((o1, o2) -> Integer.compare(o1.getCost(), o2.getCost())));
         result = new Result();
     }
 
@@ -29,7 +29,6 @@ public class NN {
     }
 
     public void executeAlgorithm() {
-        List<Vertex> vertices = graph.getVertices();
         int currentSolutionValue;
         List<Integer> currentSolution = new LinkedList<>();
         Vertex currentVertex;

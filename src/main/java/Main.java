@@ -1,3 +1,4 @@
+import algorithm.GredyCycle;
 import algorithm.NN;
 import model.Document;
 
@@ -15,6 +16,15 @@ public class Main {
         JAXBContext context = JAXBContext.newInstance(Document.class);
         Unmarshaller um = context.createUnmarshaller();
         Document document = (Document) um.unmarshal(new FileReader("kroA100.xml"));
+
+        GredyCycle gredyCycle = new GredyCycle(true, document.getGraph());
+        gredyCycle.executeAlgorithm();
+
+        System.out.println("Gredy Cycle");
+        System.out.println("Min: " + gredyCycle.getResult().getMin());
+        System.out.println("Avg: " + gredyCycle.getResult().getAvg());
+        System.out.println("Max: " + gredyCycle.getResult().getMax());
+        System.out.println(gredyCycle.getResult().getSolution());
 
         NN nn = new NN(true, document.getGraph());
         nn.executeAlgorithm();
