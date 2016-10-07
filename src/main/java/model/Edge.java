@@ -15,7 +15,16 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 public class Edge {
     @XmlValue
     int number;
+
     @XmlAttribute
     @XmlJavaTypeAdapter(AdapterDoubleToInt.class)
     Integer cost;
+
+    public int getNumber() {
+        return number;
+    }
+
+    public Integer getCost() {
+        return cost;
+    }
 }

@@ -9,5 +9,9 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Graph {
     @XmlElement(name="vertex")
-    List<Vertex> vertexes;
+    List<Vertex> vertices;
+
+    public List<Vertex> getVertices() {
+        return vertices;
+    }
 }

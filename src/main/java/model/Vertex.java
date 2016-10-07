@@ -12,4 +12,8 @@ import java.util.List;
 public class Vertex {
     @XmlElement(name="edge")
     List<Edge> edges;
+
+    public List<Edge> getEdges() {
+        return edges;
+    }
 }

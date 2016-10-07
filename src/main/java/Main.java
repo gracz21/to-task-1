@@ -1,3 +1,4 @@
+import algorithm.NN;
 import model.Document;
 
 import javax.xml.bind.JAXBContext;
@@ -14,8 +15,16 @@ public class Main {
         JAXBContext context = JAXBContext.newInstance(Document.class);
         Unmarshaller um = context.createUnmarshaller();
         Document document = (Document) um.unmarshal(new FileReader("kroA100.xml"));
+        document.getGraph().getVertices().forEach(vertex -> vertex.getEdges()
+                .sort((o1, o2) -> Integer.compare(o1.getCost(), o2.getCost())));
 
-        String sdf;
-        sdf = "dsdf";
+        NN nn = new NN(document.getGraph());
+        nn.executeAlgorithm();
+
+        System.out.println("NN");
+        System.out.println("Min: " + nn.getResult().getMin());
+        System.out.println("Avg: " + nn.getResult().getAvg());
+        System.out.println("Max: " + nn.getResult().getMax());
+        System.out.println(nn.getResult().getSolution());
     }
 }

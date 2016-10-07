@@ -13,4 +13,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Document {
     @XmlElement
     private Graph graph;
+
+    public Graph getGraph() {
+        return graph;
+    }
 }
