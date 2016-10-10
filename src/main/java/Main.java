@@ -1,6 +1,7 @@
-import algorithm.GredyCycle;
+import algorithm.GreedyCycle;
 import algorithm.NN;
 import model.Document;
+import model.Vertex;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -16,6 +17,9 @@ public class Main {
         JAXBContext context = JAXBContext.newInstance(Document.class);
         Unmarshaller um = context.createUnmarshaller();
         Document document = (Document) um.unmarshal(new FileReader("kroA100.xml"));
+        for(Vertex vertex: document.getGraph().getVertices()) {
+            vertex.getEdges().forEach(edge -> edge.setStartVertexNumber(document.getGraph().getVertices().indexOf(vertex)));
+        }
 
         NN nn = new NN(true, document.getGraph());
         nn.executeAlgorithm();
@@ -35,22 +39,22 @@ public class Main {
         System.out.println("Max: " + graspNn.getResult().getMax());
         System.out.println(graspNn.getResult().getSolution());
 
-        GredyCycle gredyCycle = new GredyCycle(true, document.getGraph());
-        gredyCycle.executeAlgorithm();
+        GreedyCycle greedyCycle = new GreedyCycle(true, document.getGraph());
+        greedyCycle.executeAlgorithm();
 
-        System.out.println("Gredy Cycle");
-        System.out.println("Min: " + gredyCycle.getResult().getMin());
-        System.out.println("Avg: " + gredyCycle.getResult().getAvg());
-        System.out.println("Max: " + gredyCycle.getResult().getMax());
-        System.out.println(gredyCycle.getResult().getSolution());
+        System.out.println("Greedy Cycle");
+        System.out.println("Min: " + greedyCycle.getResult().getMin());
+        System.out.println("Avg: " + greedyCycle.getResult().getAvg());
+        System.out.println("Max: " + greedyCycle.getResult().getMax());
+        System.out.println(greedyCycle.getResult().getSolution());
 
-        GredyCycle graspGredyCycle = new GredyCycle(false, document.getGraph());
-        graspGredyCycle.executeAlgorithm();
+        GreedyCycle graspGreedyCycle = new GreedyCycle(false, document.getGraph());
+        graspGreedyCycle.executeAlgorithm();
 
-        System.out.println("GRASP Gredy Cycle");
-        System.out.println("Min: " + graspGredyCycle.getResult().getMin());
-        System.out.println("Avg: " + graspGredyCycle.getResult().getAvg());
-        System.out.println("Max: " + graspGredyCycle.getResult().getMax());
-        System.out.println(graspGredyCycle.getResult().getSolution());
+        System.out.println("GRASP Greedy Cycle");
+        System.out.println("Min: " + graspGreedyCycle.getResult().getMin());
+        System.out.println("Avg: " + graspGreedyCycle.getResult().getAvg());
+        System.out.println("Max: " + graspGreedyCycle.getResult().getMax());
+        System.out.println(graspGreedyCycle.getResult().getSolution());
     }
 }

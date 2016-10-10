@@ -41,13 +41,13 @@ public class NN {
 
             while(currentSolution.size() < 50) {
                 usedEdge = selectNextEdge(currentVertex, currentSolution);
-                currentVertex = vertices.get(usedEdge.getNumber());
-                currentSolution.add(usedEdge.getNumber());
+                currentVertex = vertices.get(usedEdge.getEndVertexNumber());
+                currentSolution.add(usedEdge.getEndVertexNumber());
                 currentSolutionValue += usedEdge.getCost();
             }
 
             currentSolutionValue += currentVertex.getEdges().stream().
-                    filter(e -> e.getNumber() == vertices.indexOf(vertex)).findFirst().get().getCost();
+                    filter(e -> e.getEndVertexNumber() == vertices.indexOf(vertex)).findFirst().get().getCost();
             currentSolution.add(vertices.indexOf(vertex));
 
             if(result.getMin() > currentSolutionValue || result.getMin() == 0) {
@@ -63,10 +63,10 @@ public class NN {
     private Edge selectNextEdge(Vertex currentVertex, List<Integer> currentSolution) {
         Edge selectedEdge;
         if(isDeterministic) {
-            selectedEdge =  currentVertex.getEdges().stream().filter(e -> !currentSolution.contains(e.getNumber()))
+            selectedEdge =  currentVertex.getEdges().stream().filter(e -> !currentSolution.contains(e.getEndVertexNumber()))
                     .findFirst().get();
         } else {
-            selectedEdge = currentVertex.getEdges().stream().filter(e -> !currentSolution.contains(e.getNumber()))
+            selectedEdge = currentVertex.getEdges().stream().filter(e -> !currentSolution.contains(e.getEndVertexNumber()))
                     .sorted((o1, o2) -> Integer.compare(o1.getCost(), o2.getCost())).limit(3).collect(Collectors.toList())
                     .get((new Random()).nextInt(3));
         }
