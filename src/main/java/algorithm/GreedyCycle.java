@@ -6,6 +6,7 @@ import model.Vertex;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Kamil Walkowiak
@@ -28,6 +29,7 @@ public class GreedyCycle {
     public void executeAlgorithm() {
         int currentSolutionValue;
         List<Integer> currentSolution = new LinkedList<>();
+        Stream<Edge> sortedEdges;
         Edge usedEdge;
         for(Vertex vertex: vertices) {
             vertices.forEach(vertex1 -> vertex1.setInSolution(false));
@@ -35,8 +37,12 @@ public class GreedyCycle {
             currentSolution.clear();
             currentSolution.add(vertices.indexOf(vertex));
             vertex.setInSolution(true);
-            usedEdge = vertex.getEdges().stream().sorted((o1, o2) -> Integer.compare(o1.getCost(), o2.getCost()))
-                    .findFirst().get();
+            sortedEdges = vertex.getEdges().stream().sorted((o1, o2) -> Integer.compare(o1.getCost(), o2.getCost()));
+            if(isDeterministic) {
+                usedEdge = sortedEdges.findFirst().get();
+            } else {
+                usedEdge = sortedEdges.limit(3).collect(Collectors.toList()).get((new Random()).nextInt(3));
+            }
             currentSolution.add(usedEdge.getEndVertexNumber());
             vertices.get(usedEdge.getEndVertexNumber()).setInSolution(true);
             currentSolution.add(vertices.indexOf(vertex));
