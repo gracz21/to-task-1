@@ -10,10 +10,10 @@ import java.util.List;
  * @author Kamil Walkowiak
  */
 public abstract class Algorithm {
-    protected List<Vertex> vertices;
-    protected Result result;
+    List<Vertex> vertices;
+    Result result;
 
-    public Algorithm(Graph graph) {
+    Algorithm(Graph graph) {
         vertices = new LinkedList<>(graph.getVertices());
         result = new Result();
     }
@@ -24,5 +24,5 @@ public abstract class Algorithm {
 
     public abstract void executeAlgorithm();
 
-    protected abstract void nextIteration();
+    protected abstract void nextIteration(List<Integer> currentSolution);
 }
