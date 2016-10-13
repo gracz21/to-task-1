@@ -25,4 +25,11 @@ public abstract class Algorithm {
     public abstract void executeAlgorithm();
 
     protected abstract void nextIteration(List<Integer> currentSolution);
+
+    public void printResults() {
+        System.out.println("Min: " + this.result.getMin());
+        System.out.println("Avg: " + this.result.getAvg());
+        System.out.println("Max: " + this.result.getMax());
+        System.out.println(this.result.getSolution());
+    }
 }

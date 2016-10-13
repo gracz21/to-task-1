@@ -23,38 +23,22 @@ public class Main {
 
         NN nn = new NN(true, document.getGraph());
         nn.executeAlgorithm();
-
         System.out.println("NN");
-        System.out.println("Min: " + nn.getResult().getMin());
-        System.out.println("Avg: " + nn.getResult().getAvg());
-        System.out.println("Max: " + nn.getResult().getMax());
-        System.out.println(nn.getResult().getSolution());
+        nn.printResults();
 
         NN graspNn = new NN(false, document.getGraph());
         graspNn.executeAlgorithm();
-
         System.out.println("GRASP NN");
-        System.out.println("Min: " + graspNn.getResult().getMin());
-        System.out.println("Avg: " + graspNn.getResult().getAvg());
-        System.out.println("Max: " + graspNn.getResult().getMax());
-        System.out.println(graspNn.getResult().getSolution());
+        graspNn.printResults();
 
         GreedyCycle greedyCycle = new GreedyCycle(true, document.getGraph());
         greedyCycle.executeAlgorithm();
-
         System.out.println("Greedy Cycle");
-        System.out.println("Min: " + greedyCycle.getResult().getMin());
-        System.out.println("Avg: " + greedyCycle.getResult().getAvg());
-        System.out.println("Max: " + greedyCycle.getResult().getMax());
-        System.out.println(greedyCycle.getResult().getSolution());
+        greedyCycle.printResults();
 
         GreedyCycle graspGreedyCycle = new GreedyCycle(false, document.getGraph());
         graspGreedyCycle.executeAlgorithm();
-
         System.out.println("GRASP Greedy Cycle");
-        System.out.println("Min: " + graspGreedyCycle.getResult().getMin());
-        System.out.println("Avg: " + graspGreedyCycle.getResult().getAvg());
-        System.out.println("Max: " + graspGreedyCycle.getResult().getMax());
-        System.out.println(graspGreedyCycle.getResult().getSolution());
+        graspGreedyCycle.printResults();
     }
 }
