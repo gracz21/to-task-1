@@ -22,10 +22,6 @@ public class NN extends Algorithm {
         this.vertices.forEach(vertex -> vertex.getEdges().sort((o1, o2) -> Integer.compare(o1.getCost(), o2.getCost())));
     }
 
-    public Result getResult() {
-        return result;
-    }
-
     public void executeAlgorithm() {
         int currentSolutionValue;
         List<Integer> currentSolution = new LinkedList<>();
