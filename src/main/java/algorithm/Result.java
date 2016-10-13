@@ -13,6 +13,7 @@ public class Result {
     private List<Integer> solution;
 
     Result() {
+        min = Integer.MAX_VALUE;
         solution = new LinkedList<>();
     }
 
@@ -20,32 +21,26 @@ public class Result {
         return min;
     }
 
-    void setMin(int min) {
-        this.min = min;
-    }
-
     public int getAvg() {
         return (int)(avg/100 + 0.5);
-    }
-
-    void incAvg(int avg) {
-        this.avg += avg;
     }
 
     public int getMax() {
         return max;
     }
 
-    void setMax(int max) {
-        this.max = max;
-    }
-
     public List<Integer> getSolution() {
         return solution;
     }
 
-    void setSolution(List<Integer> solution) {
-        this.solution.clear();
-        this.solution.addAll(solution);
+    void updateResult(List<Integer> solution, int cost) {
+        if(this.min > cost) {
+            this.min = cost;
+            this.solution.clear();
+            this.solution.addAll(solution);
+        } else if(this.max < cost) {
+            this.max = cost;
+        }
+        avg += cost;
     }
 }

@@ -39,13 +39,7 @@ public class Rand {
                         .findFirst().get().getCost();
             }
 
-            if(result.getMin() > currentSolutionValue || result.getMin() == 0) {
-                result.setMin(currentSolutionValue);
-                result.setSolution(currentSolution);
-            } else if(result.getMax() < currentSolutionValue) {
-                result.setMax(currentSolutionValue);
-            }
-            result.incAvg(currentSolutionValue);
+            result.updateResult(currentSolution, currentSolutionValue);
         }
     }
 

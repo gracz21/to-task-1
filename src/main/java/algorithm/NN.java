@@ -1,5 +1,6 @@
 package algorithm;
 
+import algorithm.Result;
 import model.Edge;
 import model.Graph;
 import model.Vertex;
@@ -50,13 +51,7 @@ public class NN {
                     filter(e -> e.getEndVertexNumber() == vertices.indexOf(vertex)).findFirst().get().getCost();
             currentSolution.add(vertices.indexOf(vertex));
 
-            if(result.getMin() > currentSolutionValue || result.getMin() == 0) {
-                result.setMin(currentSolutionValue);
-                result.setSolution(currentSolution);
-            } else if(result.getMax() < currentSolutionValue) {
-                result.setMax(currentSolutionValue);
-            }
-            result.incAvg(currentSolutionValue);
+            result.updateResult(currentSolution, currentSolutionValue);
         }
     }
 

@@ -1,5 +1,6 @@
 package algorithm;
 
+import algorithm.Result;
 import model.Edge;
 import model.Graph;
 import model.Vertex;
@@ -58,13 +59,7 @@ public class GreedyCycle {
                         .findFirst().get().getCost();
             }
 
-            if(result.getMin() > currentSolutionValue || result.getMin() == 0) {
-                result.setMin(currentSolutionValue);
-                result.setSolution(currentSolution);
-            } else if(result.getMax() < currentSolutionValue) {
-                result.setMax(currentSolutionValue);
-            }
-            result.incAvg(currentSolutionValue);
+            result.updateResult(currentSolution, currentSolutionValue);
         }
     }
 
