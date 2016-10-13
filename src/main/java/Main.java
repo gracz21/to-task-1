@@ -1,5 +1,6 @@
 import algorithm.GreedyCycle;
 import algorithm.NN;
+import algorithm.Rand;
 import model.Document;
 import model.Vertex;
 
@@ -40,5 +41,10 @@ public class Main {
         graspGreedyCycle.executeAlgorithm();
         System.out.println("GRASP Greedy Cycle");
         graspGreedyCycle.printResults();
+
+        Rand rand = new Rand(document.getGraph());
+        rand.executeAlgorithm();
+        System.out.println("Random");
+        rand.printResults();
     }
 }

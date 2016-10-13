@@ -30,6 +30,8 @@ public class Rand extends Algorithm {
                 nextIteration(currentSolution);
             }
 
+            currentSolution.add(this.vertices.indexOf(vertex));
+
             for(int i = 0; i + 1 < currentSolution.size(); i++) {
                 int index = i;
                 currentSolutionValue += this.vertices.get(currentSolution.get(i)).getEdges().stream()
