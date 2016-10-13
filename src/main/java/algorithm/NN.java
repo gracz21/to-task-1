@@ -16,8 +16,8 @@ import java.util.stream.Stream;
 public class NN extends Algorithm {
     private boolean isDeterministic;
 
-    public NN(boolean isDeterministic, Graph graph) {
-        super(graph);
+    public NN(boolean isDeterministic, List<Vertex> vertices) {
+        super(vertices);
         this.isDeterministic = isDeterministic;
         this.vertices.forEach(vertex -> vertex.getEdges().sort((o1, o2) -> Integer.compare(o1.getCost(), o2.getCost())));
     }

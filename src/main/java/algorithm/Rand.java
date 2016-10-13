@@ -14,8 +14,8 @@ import java.util.stream.Collectors;
  */
 public class Rand extends Algorithm {
 
-    public Rand(Graph graph) {
-        super(graph);
+    public Rand(List<Vertex> vertices) {
+        super(vertices);
     }
 
     public void executeAlgorithm() {

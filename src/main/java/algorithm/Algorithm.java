@@ -13,9 +13,9 @@ public abstract class Algorithm {
     List<Vertex> vertices;
     Result result;
 
-    Algorithm(Graph graph) {
-        vertices = new LinkedList<>(graph.getVertices());
-        result = new Result();
+    Algorithm(List<Vertex> vertices) {
+        this.vertices = new LinkedList<>(vertices);
+        this.result = new Result();
     }
 
     public Result getResult() {

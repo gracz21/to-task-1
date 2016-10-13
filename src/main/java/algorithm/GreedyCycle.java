@@ -14,8 +14,8 @@ import java.util.stream.Stream;
 public class GreedyCycle extends Algorithm {
     private boolean isDeterministic;
 
-    public GreedyCycle(boolean isDeterministic, Graph graph) {
-        super(graph);
+    public GreedyCycle(boolean isDeterministic, List<Vertex> vertices) {
+        super(vertices);
         this.isDeterministic = isDeterministic;
     }
 

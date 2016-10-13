@@ -22,27 +22,27 @@ public class Main {
             vertex.getEdges().forEach(edge -> edge.setStartVertexNumber(document.getGraph().getVertices().indexOf(vertex)));
         }
 
-        NN nn = new NN(true, document.getGraph());
+        NN nn = new NN(true, document.getGraph().getVertices());
         nn.executeAlgorithm();
         System.out.println("NN");
         nn.printResults();
 
-        NN graspNn = new NN(false, document.getGraph());
+        NN graspNn = new NN(false, document.getGraph().getVertices());
         graspNn.executeAlgorithm();
         System.out.println("GRASP NN");
         graspNn.printResults();
 
-        GreedyCycle greedyCycle = new GreedyCycle(true, document.getGraph());
+        GreedyCycle greedyCycle = new GreedyCycle(true, document.getGraph().getVertices());
         greedyCycle.executeAlgorithm();
         System.out.println("Greedy Cycle");
         greedyCycle.printResults();
 
-        GreedyCycle graspGreedyCycle = new GreedyCycle(false, document.getGraph());
+        GreedyCycle graspGreedyCycle = new GreedyCycle(false, document.getGraph().getVertices());
         graspGreedyCycle.executeAlgorithm();
         System.out.println("GRASP Greedy Cycle");
         graspGreedyCycle.printResults();
 
-        Rand rand = new Rand(document.getGraph());
+        Rand rand = new Rand(document.getGraph().getVertices());
         rand.executeAlgorithm();
         System.out.println("Random");
         rand.printResults();
