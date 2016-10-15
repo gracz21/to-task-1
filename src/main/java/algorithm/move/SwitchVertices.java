@@ -44,6 +44,8 @@ public class SwitchVertices extends Move {
 
     @Override
     public void doMove() {
+        this.out.setInSolution(false);
+        this.in.setInSolution(true);
         this.currentSolution.set(this.currentSolution.indexOf(this.out.getNumber()), this.in.getNumber());
     }
 }
