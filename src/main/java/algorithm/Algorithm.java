@@ -32,10 +32,14 @@ public abstract class Algorithm {
         System.out.println("Avg: " + this.result.getAvg());
         System.out.println("Max: " + this.result.getMax());
         System.out.println(this.result.getSolution());
-        System.out.println("\nAfter Local Search:");
+        System.out.println("After Local Search:");
         System.out.println("Min: " + this.resultAfterLocalSearch.getMin());
         System.out.println("Avg: " + this.resultAfterLocalSearch.getAvg());
         System.out.println("Max: " + this.resultAfterLocalSearch.getMax());
         System.out.println(this.resultAfterLocalSearch.getSolution());
+        System.out.println("Time of Local Search:");
+        System.out.println("Min: " + this.resultAfterLocalSearch.getMinTime() + " ms");
+        System.out.println("Avg: " + this.resultAfterLocalSearch.getAvgTime() + " ms");
+        System.out.println("Max: " + this.resultAfterLocalSearch.getMaxTime() + " ms");
     }
 }

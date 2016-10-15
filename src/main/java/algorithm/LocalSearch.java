@@ -36,6 +36,7 @@ public class LocalSearch {
     }
 
     public void executeAlgorithm() {
+        long startTime = System.nanoTime();
         List<Move> bestMovesList = new ArrayList<>(50);
         Move bestMove;
         this.solution.stream();
@@ -50,8 +51,10 @@ public class LocalSearch {
                 break;
             }
         }
+        long estimatedTime = System.nanoTime() - startTime;
 
         this.result.updateResult(solution, cost);
+        this.result.updateTimeResult(estimatedTime);
     }
 
     private Move findBestMoveForVertex(int currentVertexNumber) {

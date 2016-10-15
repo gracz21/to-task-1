@@ -31,22 +31,22 @@ public class Main {
 
         NN graspNn = new NN(false, document.getGraph().getVertices());
         graspNn.executeAlgorithm();
-        System.out.println("GRASP NN");
+        System.out.println("\nGRASP NN");
         graspNn.printResults();
 
         GreedyCycle greedyCycle = new GreedyCycle(true, document.getGraph().getVertices());
         greedyCycle.executeAlgorithm();
-        System.out.println("Greedy Cycle");
+        System.out.println("\nGreedy Cycle");
         greedyCycle.printResults();
 
         GreedyCycle graspGreedyCycle = new GreedyCycle(false, document.getGraph().getVertices());
         graspGreedyCycle.executeAlgorithm();
-        System.out.println("GRASP Greedy Cycle");
+        System.out.println("\nGRASP Greedy Cycle");
         graspGreedyCycle.printResults();
 
         Rand rand = new Rand(document.getGraph().getVertices());
         rand.executeAlgorithm();
-        System.out.println("Random");
+        System.out.println("\nRandom");
         rand.printResults();
     }
 }
