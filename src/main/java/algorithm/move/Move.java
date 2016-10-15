@@ -9,8 +9,6 @@ public abstract class Move {
     public int getDelta() {
         return delta;
     }
-
     public abstract int countDelta();
-
     public abstract void doMove();
 }

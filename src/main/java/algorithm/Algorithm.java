@@ -11,10 +11,12 @@ import java.util.List;
 public abstract class Algorithm {
     List<Vertex> vertices;
     Result result;
+    Result resultAfterLocalSearch;
 
     Algorithm(List<Vertex> vertices) {
         this.vertices = new LinkedList<>(vertices);
         this.result = new Result();
+        this.resultAfterLocalSearch = new Result();
     }
 
     public Result getResult() {
@@ -30,5 +32,10 @@ public abstract class Algorithm {
         System.out.println("Avg: " + this.result.getAvg());
         System.out.println("Max: " + this.result.getMax());
         System.out.println(this.result.getSolution());
+        System.out.println("\nAfter Local Search:");
+        System.out.println("Min: " + this.resultAfterLocalSearch.getMin());
+        System.out.println("Avg: " + this.resultAfterLocalSearch.getAvg());
+        System.out.println("Max: " + this.resultAfterLocalSearch.getMax());
+        System.out.println(this.resultAfterLocalSearch.getSolution());
     }
 }

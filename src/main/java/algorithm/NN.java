@@ -14,20 +14,24 @@ import java.util.stream.Stream;
  */
 public class NN extends Algorithm {
     private boolean isDeterministic;
+    private LocalSearch localSearch;
 
     public NN(boolean isDeterministic, List<Vertex> vertices) {
         super(vertices);
         this.isDeterministic = isDeterministic;
         this.vertices.forEach(vertex -> vertex.getEdges().sort((o1, o2) -> Integer.compare(o1.getCost(), o2.getCost())));
+        this.localSearch = new LocalSearch(vertices);
     }
 
     public void executeAlgorithm() {
         int currentSolutionValue;
         List<Integer> currentSolution = new LinkedList<>();
         for(Vertex vertex: this.vertices) {
+            this.vertices.forEach(vertex1 -> vertex1.setInSolution(false));
             currentSolutionValue = 0;
             currentSolution.clear();
             currentSolution.add(this.vertices.indexOf(vertex));
+            vertex.setInSolution(true);
 
             while(currentSolution.size() < 50) {
                 nextIteration(currentSolution);
@@ -42,7 +46,11 @@ public class NN extends Algorithm {
             }
 
             this.result.updateResult(currentSolution, currentSolutionValue);
+            localSearch.setSolution(currentSolution);
+            localSearch.setCost(currentSolutionValue);
+            localSearch.executeAlgorithm();
         }
+        this.resultAfterLocalSearch = localSearch.getResult();
     }
 
     @Override
@@ -60,5 +68,9 @@ public class NN extends Algorithm {
                     .get((new Random()).nextInt(3));
         }
         currentSolution.add(selectedEdge.getEndVertexNumber());
+        this.vertices.stream()
+                .filter(vertex -> vertex.getNumber() == selectedEdge.getEndVertexNumber())
+                .findFirst()
+                .get().setInSolution(true);
     }
 }
