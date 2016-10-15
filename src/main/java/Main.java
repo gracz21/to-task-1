@@ -19,7 +19,9 @@ public class Main {
         Unmarshaller um = context.createUnmarshaller();
         Document document = (Document) um.unmarshal(new FileReader("kroA100.xml"));
         for(Vertex vertex: document.getGraph().getVertices()) {
-            vertex.getEdges().forEach(edge -> edge.setStartVertexNumber(document.getGraph().getVertices().indexOf(vertex)));
+            int vertexNumber = document.getGraph().getVertices().indexOf(vertex);
+            vertex.setNumber(vertexNumber);
+            vertex.getEdges().forEach(edge -> edge.setStartVertexNumber(vertexNumber));
         }
 
         NN nn = new NN(true, document.getGraph().getVertices());

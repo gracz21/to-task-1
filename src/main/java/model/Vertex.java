@@ -14,6 +14,9 @@ public class Vertex {
     @XmlTransient
     boolean isInSolution;
 
+    @XmlTransient
+    int number;
+
     @XmlElement(name="edge")
     List<Edge> edges;
 
@@ -31,5 +34,13 @@ public class Vertex {
 
     public boolean isInSolution() {
         return isInSolution;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public int getNumber() {
+        return number;
     }
 }
