@@ -1,19 +1,13 @@
 package algorithm;
 
-import com.sun.xml.internal.ws.util.StreamUtils;
 import model.Edge;
-import model.Vertex;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 /**
- * Created by inf109714 on 04.10.2016.
+ * @author Kamil Walkowiak
  */
 public class NN extends Algorithm {
     private boolean isDeterministic;
@@ -53,13 +47,26 @@ public class NN extends Algorithm {
 
     @Override
     protected void nextIteration(List<Integer> currentSolution) {
+        int selectedVertex;
         int currentVertex =  currentSolution.get(currentSolution.size() - 1);
         Edge topEdges[] = new Edge[3];
-        int selectedVertex = IntStream.range(0, this.incidenceMatrix[currentVertex].length)
+        List<Integer> availableVertices = IntStream.range(0, this.incidenceMatrix[currentVertex].length)
                 .filter(value -> !currentSolution.contains(value))
-                .mapToObj(operand -> this.incidenceMatrix[currentVertex][operand])
-                .min((o1, o2) -> Integer.compare(o1.getCost(), o2.getCost()))
-                .get().getEndVertexNumber();
+                .boxed()
+                .collect(Collectors.toList());
+        availableVertices.stream()
+                .filter(vertex -> topEdges[2] == null ||
+                        (topEdges[2].getCost() > this.incidenceMatrix[currentVertex][vertex].getCost()))
+                .forEach(vertex -> {
+                    topEdges[2] = this.incidenceMatrix[currentVertex][vertex];
+                    Arrays.sort(topEdges, Comparator.nullsLast((o1, o2) -> Integer.compare(o1.getCost(), o2.getCost())));
+                });
+
+        if(isDeterministic) {
+            selectedVertex = topEdges[0].getEndVertexNumber();
+        } else {
+            selectedVertex = topEdges[(new Random()).nextInt(3)].getEndVertexNumber();
+        }
 
         currentSolution.add(selectedVertex);
     }

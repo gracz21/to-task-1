@@ -13,7 +13,7 @@ import java.io.FileReader;
 import java.util.List;
 
 /**
- * Created by inf109714 on 04.10.2016.
+ * @author Kamil Walkowiak
  */
 public class Main {
     public static void main(String[] args) throws JAXBException, FileNotFoundException {
@@ -27,21 +27,16 @@ public class Main {
             int currentIndex = i;
             vertices.get(i).getEdges().forEach(edge -> incidenceMatrix[currentIndex][edge.getEndVertexNumber()] = edge);
         }
-//        for(Vertex vertex: document.getGraph().getVertices()) {
-//            int vertexNumber = document.getGraph().getVertices().indexOf(vertex);
-//            vertex.setNumber(vertexNumber);
-//            vertex.getEdges().forEach(edge -> edge.setStartVertexNumber(vertexNumber));
-//        }
 
         NN nn = new NN(true, incidenceMatrix);
         nn.executeAlgorithm();
         System.out.println("NN");
         nn.printResults();
 
-//        NN graspNn = new NN(false, document.getGraph().getVertices());
-//        graspNn.executeAlgorithm();
-//        System.out.println("\nGRASP NN");
-//        graspNn.printResults();
+        NN graspNn = new NN(false, incidenceMatrix);
+        graspNn.executeAlgorithm();
+        System.out.println("\nGRASP NN");
+        graspNn.printResults();
 //
 //        GreedyCycle greedyCycle = new GreedyCycle(true, document.getGraph().getVertices());
 //        greedyCycle.executeAlgorithm();
