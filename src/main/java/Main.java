@@ -25,7 +25,10 @@ public class Main {
         List<Vertex> vertices = document.getGraph().getVertices();
         for(int i = 0; i < vertices.size(); i++) {
             int currentIndex = i;
-            vertices.get(i).getEdges().forEach(edge -> incidenceMatrix[currentIndex][edge.getEndVertexNumber()] = edge);
+            vertices.get(i).getEdges().forEach(edge ->{
+                edge.setStartVertexNumber(currentIndex);
+                incidenceMatrix[currentIndex][edge.getEndVertexNumber()] = edge;
+            });
         }
 
         NN nn = new NN(true, incidenceMatrix);
@@ -37,17 +40,17 @@ public class Main {
         graspNn.executeAlgorithm();
         System.out.println("\nGRASP NN");
         graspNn.printResults();
-//
-//        GreedyCycle greedyCycle = new GreedyCycle(true, document.getGraph().getVertices());
-//        greedyCycle.executeAlgorithm();
-//        System.out.println("\nGreedy Cycle");
-//        greedyCycle.printResults();
-//
-//        GreedyCycle graspGreedyCycle = new GreedyCycle(false, document.getGraph().getVertices());
-//        graspGreedyCycle.executeAlgorithm();
-//        System.out.println("\nGRASP Greedy Cycle");
-//        graspGreedyCycle.printResults();
-//
+
+        GreedyCycle greedyCycle = new GreedyCycle(true, incidenceMatrix);
+        greedyCycle.executeAlgorithm();
+        System.out.println("\nGreedy Cycle");
+        greedyCycle.printResults();
+
+        GreedyCycle graspGreedyCycle = new GreedyCycle(false, incidenceMatrix);
+        graspGreedyCycle.executeAlgorithm();
+        System.out.println("\nGRASP Greedy Cycle");
+        graspGreedyCycle.printResults();
+
         Rand rand = new Rand(incidenceMatrix);
         rand.executeAlgorithm();
         System.out.println("\nRandom");

@@ -3,7 +3,6 @@ package algorithm;
 import model.Edge;
 
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
@@ -47,7 +46,6 @@ public class NN extends Algorithm {
 
     @Override
     protected void nextIteration(List<Integer> currentSolution) {
-        int selectedVertex;
         int currentVertex =  currentSolution.get(currentSolution.size() - 1);
         Edge topEdges[] = new Edge[3];
 
@@ -62,11 +60,9 @@ public class NN extends Algorithm {
                 });
 
         if(isDeterministic) {
-            selectedVertex = topEdges[0].getEndVertexNumber();
+            currentSolution.add(topEdges[0].getEndVertexNumber());
         } else {
-            selectedVertex = topEdges[(new Random()).nextInt(3)].getEndVertexNumber();
+            currentSolution.add(topEdges[(new Random()).nextInt(3)].getEndVertexNumber());
         }
-
-        currentSolution.add(selectedVertex);
     }
 }
