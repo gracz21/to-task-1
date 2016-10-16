@@ -50,11 +50,10 @@ public class NN extends Algorithm {
         int selectedVertex;
         int currentVertex =  currentSolution.get(currentSolution.size() - 1);
         Edge topEdges[] = new Edge[3];
-        List<Integer> availableVertices = IntStream.range(0, this.incidenceMatrix[currentVertex].length)
+
+        IntStream.range(0, this.incidenceMatrix[currentVertex].length)
                 .filter(value -> !currentSolution.contains(value))
                 .boxed()
-                .collect(Collectors.toList());
-        availableVertices.stream()
                 .filter(vertex -> topEdges[2] == null ||
                         (topEdges[2].getCost() > this.incidenceMatrix[currentVertex][vertex].getCost()))
                 .forEach(vertex -> {

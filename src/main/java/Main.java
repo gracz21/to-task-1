@@ -48,9 +48,9 @@ public class Main {
 //        System.out.println("\nGRASP Greedy Cycle");
 //        graspGreedyCycle.printResults();
 //
-//        Rand rand = new Rand(document.getGraph().getVertices());
-//        rand.executeAlgorithm();
-//        System.out.println("\nRandom");
-//        rand.printResults();
+        Rand rand = new Rand(incidenceMatrix);
+        rand.executeAlgorithm();
+        System.out.println("\nRandom");
+        rand.printResults();
     }
 }
