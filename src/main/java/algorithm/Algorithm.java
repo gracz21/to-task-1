@@ -1,5 +1,6 @@
 package algorithm;
 
+import model.Edge;
 import model.Vertex;
 
 import java.util.LinkedList;
@@ -9,12 +10,12 @@ import java.util.List;
  * @author Kamil Walkowiak
  */
 public abstract class Algorithm {
-    List<Vertex> vertices;
+    Edge incidenceMatrix[][];
     Result result;
     Result resultAfterLocalSearch;
 
-    Algorithm(List<Vertex> vertices) {
-        this.vertices = new LinkedList<>(vertices);
+    public Algorithm(Edge[][] incidenceMatrix) {
+        this.incidenceMatrix = incidenceMatrix;
         this.result = new Result();
         this.resultAfterLocalSearch = new Result();
     }

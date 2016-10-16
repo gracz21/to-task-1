@@ -3,7 +3,7 @@ package algorithm;
 import algorithm.move.Move;
 import algorithm.move.SwitchEdges;
 import algorithm.move.SwitchVertices;
-import model.Vertex;
+import model.Edge;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,13 +13,13 @@ import java.util.stream.Collectors;
  * Created by inf109714 on 11.10.2016.
  */
 public class LocalSearch {
-    private List<Vertex> vertices;
+    private Edge[][] incidenceMatrix;
     private List<Integer> solution;
     private int cost;
     private Result result;
 
-    public LocalSearch(List<Vertex> vertices) {
-        this.vertices = new ArrayList<>(vertices);
+    public LocalSearch(Edge[][] incidenceMatrix) {
+        this.incidenceMatrix = incidenceMatrix;
         this.result = new Result();
     }
 
@@ -58,36 +58,24 @@ public class LocalSearch {
     }
 
     private Move findBestMoveForVertex(int currentVertexNumber) {
-        List<Move> minimalMoves = new ArrayList<>();
-        Vertex currentVertex = this.vertices
-                .stream()
-                .filter(vertex -> vertex.getNumber() == currentVertexNumber)
-                .findFirst().get();
+        Move minimalMove = null, currentMove = null;
         int currentVertexSolutionIndex = this.solution.indexOf(currentVertexNumber);
-        int prevVertexSolutionIndex;
-        if(currentVertexSolutionIndex - 1 < 0) {
-            prevVertexSolutionIndex = this.solution.size() - 2;
-        } else {
-            prevVertexSolutionIndex = currentVertexSolutionIndex - 1;
+        int prevVertexNumber = this.solution.get((currentVertexSolutionIndex + this.solution.size() - 2)%(this.solution.size() - 1));
+        int nextVertexNumber = this.solution.get((currentVertexSolutionIndex + 1)%(this.solution.size() - 1));
+
+        for(int i = 0; i < this.incidenceMatrix.length; i++) {
+            if(!this.solution.contains(i)) {
+                currentMove = new SwitchVertices(currentVertexNumber, prevVertexNumber, nextVertexNumber, i, incidenceMatrix, solution);
+            } else if(i != currentVertexNumber && i != prevVertexNumber && i != nextVertexNumber) {
+                int nextVertexNumber2 = this.solution.get((this.solution.indexOf(i) + 1)%(this.solution.size() - 1));
+                currentMove = new SwitchEdges(currentVertexNumber, nextVertexNumber, i, nextVertexNumber2, incidenceMatrix, solution);
+            }
+
+            if(minimalMove == null || (currentMove.getDelta() < minimalMove.getDelta())) {
+                minimalMove = currentMove;
+            }
         }
-        int nextVertexSolutionIndex = (currentVertexSolutionIndex + 1)%(this.solution.size() - 1);
 
-        //Find minimal vertices switch move for current vertex
-        minimalMoves.add(this.vertices.stream()
-                .filter(vertex -> !vertex.isInSolution())
-                .map(vertex -> new SwitchVertices(currentVertex, vertex, this.solution))
-                .min((o1, o2) -> Integer.compare(o1.getDelta(), o2.getDelta())).get());
-
-        //Find minimal edges switch move for edge that start in current vertex
-        minimalMoves.add(this.vertices.stream()
-                .filter(vertex -> vertex.isInSolution() &&
-                        vertex.getNumber() != currentVertexNumber &&
-                        vertex.getNumber() != this.solution.get(prevVertexSolutionIndex) &&
-                        vertex.getNumber() != this.solution.get(nextVertexSolutionIndex)
-                )
-                .map(vertex -> new SwitchEdges(currentVertex, vertex, vertices.get(solution.get(nextVertexSolutionIndex)), this.solution))
-                .min((o1, o2) -> Integer.compare(o1.getDelta(), o2.getDelta())).get());
-
-        return minimalMoves.stream().min((o1, o2) -> Integer.compare(o1.getDelta(), o2.getDelta())).get();
+        return minimalMove;
     }
 }
