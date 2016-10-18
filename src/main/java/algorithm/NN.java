@@ -44,6 +44,24 @@ public class NN extends Algorithm {
         this.resultAfterLocalSearch = localSearch.getResult();
     }
 
+    public Result getSingleResult() {
+        int startNode = (new Random()).nextInt(incidenceMatrix.length);
+        List<Integer> solution = new ArrayList<>(startNode);
+        int solutionValue = 0;
+
+        while(solution.size() < 50) {
+            nextIteration(solution);
+        }
+        solution.add(startNode);
+
+        for(int i = 0; i + 1 < solution.size(); i++) {
+            solutionValue += this.incidenceMatrix[solution.get(i)][solution.get(i+1)].getCost();
+        }
+
+        result.updateResult(solution, solutionValue);
+        return result;
+    }
+
     @Override
     protected void nextIteration(List<Integer> currentSolution) {
         int currentVertex =  currentSolution.get(currentSolution.size() - 1);
