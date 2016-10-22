@@ -69,7 +69,8 @@ public class Result {
     void updateTimeResult(long time) {
         if(this.minTime > time) {
             this.minTime = time;
-        } else if(this.maxTime < time) {
+        }
+        if(this.maxTime < time) {
             this.maxTime = time;
         }
         avgTime += time;
