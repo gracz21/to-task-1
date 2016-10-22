@@ -14,11 +14,15 @@ public class Result {
     private long minTime;
     private long avgTime;
     private long maxTime;
+    private int solutionsCounter;
+    private int timeMeasurementsCounter;
 
     Result() {
         min = Integer.MAX_VALUE;
         minTime = Long.MAX_VALUE;
         solution = new LinkedList<>();
+        solutionsCounter = 0;
+        timeMeasurementsCounter = 0;
     }
 
     public int getMin() {
@@ -26,7 +30,7 @@ public class Result {
     }
 
     public int getAvg() {
-        return (int)(avg/100 + 0.5);
+        return (int)(avg/solutionsCounter + 0.5);
     }
 
     public int getMax() {
@@ -42,7 +46,7 @@ public class Result {
     }
 
     public double getAvgTime() {
-        return avgTime/100000000.0;
+        return avgTime/(1000000.0*timeMeasurementsCounter);
     }
 
     public double getMaxTime() {
@@ -54,10 +58,12 @@ public class Result {
             this.min = cost;
             this.solution.clear();
             this.solution.addAll(solution);
-        } else if(this.max < cost) {
+        }
+        if(this.max < cost) {
             this.max = cost;
         }
         avg += cost;
+        solutionsCounter++;
     }
 
     void updateTimeResult(long time) {
@@ -67,5 +73,6 @@ public class Result {
             this.maxTime = time;
         }
         avgTime += time;
+        timeMeasurementsCounter++;
     }
 }

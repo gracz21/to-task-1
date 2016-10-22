@@ -24,6 +24,10 @@ public abstract class Algorithm {
         return result;
     }
 
+    public Result getResultAfterLocalSearch() {
+        return resultAfterLocalSearch;
+    }
+
     public abstract void executeAlgorithm();
 
     protected abstract void nextIteration(List<Integer> currentSolution);

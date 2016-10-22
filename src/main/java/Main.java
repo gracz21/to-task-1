@@ -1,4 +1,5 @@
 import algorithm.GreedyCycle;
+import algorithm.MultipleStartLocalSearch;
 import algorithm.NN;
 import algorithm.Rand;
 import model.Document;
@@ -55,5 +56,10 @@ public class Main {
         rand.executeAlgorithm();
         System.out.println("\nRandom");
         rand.printResults();
+
+        MultipleStartLocalSearch mlsl = new MultipleStartLocalSearch(new NN(false, incidenceMatrix));
+        mlsl.executeAlgorithm();
+        System.out.println("\nMultiple Start Local Search");
+        mlsl.printResults();
     }
 }
