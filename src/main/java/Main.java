@@ -1,7 +1,4 @@
-import algorithm.GreedyCycle;
-import algorithm.MultipleStartLocalSearch;
-import algorithm.NN;
-import algorithm.Rand;
+import algorithm.*;
 import model.Document;
 import model.Edge;
 import model.Vertex;
@@ -61,5 +58,10 @@ public class Main {
         mlsl.executeAlgorithm();
         System.out.println("\nMultiple Start Local Search");
         mlsl.printResults();
+
+        IteratedLocalSearch ils = new IteratedLocalSearch(incidenceMatrix, (long)mlsl.getResult().getAvgTime(), new NN(false, incidenceMatrix), 3);
+        ils.executeAlgorithm();
+        System.out.println("\nIterated Local Search");
+        ils.printResults();
     }
 }

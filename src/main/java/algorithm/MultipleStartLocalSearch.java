@@ -1,7 +1,7 @@
 package algorithm;
 
 /**
- * Created by inf109714 on 18.10.2016.
+ * @author Kamil Walkowiak
  */
 public class MultipleStartLocalSearch {
     private Algorithm nondeterministicAlgorithm;
@@ -28,6 +28,10 @@ public class MultipleStartLocalSearch {
                     this.nondeterministicAlgorithm.getResultAfterLocalSearch().getMin());
             this.result.updateTimeResult(estimatedTime);
         }
+    }
+
+    public Result getResult() {
+        return result;
     }
 
     public void printResults() {

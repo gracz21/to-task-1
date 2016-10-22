@@ -46,7 +46,8 @@ public class NN extends Algorithm {
 
     public Result getSingleResult() {
         int startNode = (new Random()).nextInt(incidenceMatrix.length);
-        List<Integer> solution = new ArrayList<>(startNode);
+        List<Integer> solution = new ArrayList<>();
+        solution.add(startNode);
         int solutionValue = 0;
 
         while(solution.size() < 50) {
@@ -64,7 +65,7 @@ public class NN extends Algorithm {
 
     @Override
     protected void nextIteration(List<Integer> currentSolution) {
-        int currentVertex =  currentSolution.get(currentSolution.size() - 1);
+        int currentVertex = currentSolution.get(currentSolution.size() - 1);
         Edge topEdges[] = new Edge[3];
 
         IntStream.range(0, this.incidenceMatrix[currentVertex].length)
