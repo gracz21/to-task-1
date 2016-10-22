@@ -56,12 +56,12 @@ public class GreedyCycle extends Algorithm {
             }
 
             this.result.updateResult(currentSolution, currentSolutionValue);
-            localSearch.setSolution(currentSolution);
-            localSearch.setCost(currentSolutionValue);
-            localSearch.executeAlgorithm();
+            this.localSearch.setSolution(currentSolution);
+            this.localSearch.setCost(currentSolutionValue);
+            this.localSearch.executeAlgorithm();
+            this.resultAfterLocalSearch.updateResult(this.localSearch.getSolution(), this.localSearch.getCost());
+            this.resultAfterLocalSearch.updateTimeResult(this.localSearch.getEstimatedTime());
         }
-
-        this.resultAfterLocalSearch = localSearch.getResult();
     }
 
     @Override

@@ -16,15 +16,22 @@ public class LocalSearch {
     private Edge[][] incidenceMatrix;
     private List<Integer> solution;
     private int cost;
-    private Result result;
+    private long estimatedTime;
 
     public LocalSearch(Edge[][] incidenceMatrix) {
         this.incidenceMatrix = incidenceMatrix;
-        this.result = new Result();
     }
 
-    public Result getResult() {
-        return result;
+    public List<Integer> getSolution() {
+        return solution;
+    }
+
+    public int getCost() {
+        return cost;
+    }
+
+    public long getEstimatedTime() {
+        return estimatedTime;
     }
 
     public void setSolution(List<Integer> solution) {
@@ -51,10 +58,7 @@ public class LocalSearch {
                 break;
             }
         }
-        long estimatedTime = System.nanoTime() - startTime;
-
-        this.result.updateResult(solution, cost);
-        this.result.updateTimeResult(estimatedTime);
+        this.estimatedTime = System.nanoTime() - startTime;
     }
 
     private Move findBestMoveForVertex(int currentVertexNumber) {

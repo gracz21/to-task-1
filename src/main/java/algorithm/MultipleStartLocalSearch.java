@@ -13,11 +13,15 @@ public class MultipleStartLocalSearch {
     }
 
     public void executeAlgorithm() {
+        //Run MSLS 10 times
         for(int i = 0; i < 10; i++) {
             long startTime = System.nanoTime();
+
+            //Single MSLS run (1000x LS run)
             for(int j = 0; j < 10; j++) {
                 this.nondeterministicAlgorithm.executeAlgorithm();
             }
+
             long estimatedTime = System.nanoTime() - startTime;
 
             this.result.updateResult(this.nondeterministicAlgorithm.getResultAfterLocalSearch().getSolution(),
