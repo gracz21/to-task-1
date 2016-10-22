@@ -35,7 +35,7 @@ public class LocalSearch {
     }
 
     public void setSolution(List<Integer> solution) {
-        this.solution = solution;
+        this.solution = new ArrayList<>(solution);
     }
 
     public void setCost(int cost) {

@@ -48,7 +48,7 @@ public class IteratedLocalSearch {
             this.localSearch.executeAlgorithm();
 
             //Initial solution is currently best
-            bestSolution = this.localSearch.getSolution();
+            bestSolution = new ArrayList<>(this.localSearch.getSolution());
             bestCost = this.localSearch.getCost();
 
             //Main loop
@@ -56,7 +56,7 @@ public class IteratedLocalSearch {
                 currentSolution = new ArrayList<>(bestSolution);
                 currentCost = bestCost;
                 //Add perturbations
-                perturbation(currentSolution, currentCost);
+                currentCost = perturbation(currentSolution, currentCost);
 
                 //Run LS for new solution after perturbations
                 this.localSearch.setSolution(currentSolution);
@@ -74,15 +74,17 @@ public class IteratedLocalSearch {
         }
     }
 
-    private void perturbation(List<Integer> solution, int cost) {
+    private int perturbation(List<Integer> solution, int cost) {
         Move move;
         Random random = new Random();
 
         for(int i = 0; i < numberOfPerturbations; i++) {
-            int vertex = solution.get(random.nextInt(solution.size() - 2));
-            int prevVertex = solution.get((vertex + solution.size() - 2)%(solution.size() - 1));
-            int nextVertex = solution.get((vertex + 1)%(solution.size() - 1));
+            int vertexIndex = random.nextInt(solution.size() - 1);
+            int vertex = solution.get(vertexIndex);
+            int prevVertex = solution.get((vertexIndex + solution.size() - 2)%(solution.size() - 1));
+            int nextVertex = solution.get((vertexIndex + 1)%(solution.size() - 1));
 
+            //Randomize move type
             if(random.nextBoolean()) {
                 //Make vertices switch
                 List<Integer> availableVertices = IntStream.range(0, this.incidenceMatrix.length)
@@ -95,17 +97,20 @@ public class IteratedLocalSearch {
             } else {
                 //Make edges switch
                 List<Integer> availableVertices = solution.stream()
+                        .distinct()
                         .filter(o -> o != vertex && o != prevVertex && o != nextVertex)
                         .collect(Collectors.toList());
-                int vertex2 = random.nextInt(availableVertices.size());
+                int vertex2 = availableVertices.get(random.nextInt(availableVertices.size()));
                 int nextVertex2 = solution.get((solution.indexOf(vertex2) + 1)%(solution.size() - 1));
 
-                move = new SwitchEdges(vertex, prevVertex, vertex2, nextVertex2, this.incidenceMatrix, solution);
+                move = new SwitchEdges(vertex, nextVertex, vertex2, nextVertex2, this.incidenceMatrix, solution);
             }
 
             move.doMove();
             cost += move.getDelta();
         }
+
+        return cost;
     }
 
     public void printResults() {

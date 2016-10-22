@@ -59,7 +59,7 @@ public class Main {
         System.out.println("\nMultiple Start Local Search");
         mlsl.printResults();
 
-        IteratedLocalSearch ils = new IteratedLocalSearch(incidenceMatrix, (long)mlsl.getResult().getAvgTime(), new NN(false, incidenceMatrix), 3);
+        IteratedLocalSearch ils = new IteratedLocalSearch(incidenceMatrix, (long)(mlsl.getResult().getAvgTime()*1000000), new NN(false, incidenceMatrix), 3);
         ils.executeAlgorithm();
         System.out.println("\nIterated Local Search");
         ils.printResults();
