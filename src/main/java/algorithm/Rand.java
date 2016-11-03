@@ -1,5 +1,6 @@
 package algorithm;
 
+import javafx.util.Pair;
 import model.Edge;
 
 import java.util.ArrayList;
@@ -43,6 +44,28 @@ public class Rand extends Algorithm {
             this.resultAfterLocalSearch.updateResult(this.localSearch.getSolution(), this.localSearch.getCost());
             this.resultAfterLocalSearch.updateTimeResult(this.localSearch.getEstimatedTime());
         }
+    }
+
+    public Pair<List<Integer>, Integer> getSingleResultAfterLocalSearch() {
+        int startNode = (new Random()).nextInt(incidenceMatrix.length);
+        List<Integer> solution = new ArrayList<>();
+        solution.add(startNode);
+        int solutionValue = 0;
+
+        while(solution.size() < 50) {
+            nextIteration(solution);
+        }
+        solution.add(startNode);
+
+        for(int i = 0; i + 1 < solution.size(); i++) {
+            solutionValue += this.incidenceMatrix[solution.get(i)][solution.get(i+1)].getCost();
+        }
+
+        localSearch.setSolution(solution);
+        localSearch.setCost(solutionValue);
+        localSearch.executeAlgorithm();
+
+        return new Pair<>(localSearch.getSolution(), localSearch.getCost());
     }
 
     @Override

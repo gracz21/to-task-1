@@ -1,14 +1,13 @@
 package algorithm.similarity;
 
 import javafx.util.Pair;
-import model.Edge;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
- * Created by inf109714 on 25.10.2016.
+ * @author Kamil Walkowiak
  */
 public class SimilarityByEdges implements Similarity {
     @Override

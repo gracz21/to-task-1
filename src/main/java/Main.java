@@ -1,4 +1,5 @@
 import algorithm.*;
+import algorithm.similarity.SimilarityExperiment;
 import model.Document;
 import model.Edge;
 import model.Vertex;
@@ -29,39 +30,43 @@ public class Main {
             });
         }
 
-        NN nn = new NN(true, incidenceMatrix);
-        nn.executeAlgorithm();
-        System.out.println("NN");
-        nn.printResults();
+//        NN nn = new NN(true, incidenceMatrix);
+//        nn.executeAlgorithm();
+//        System.out.println("NN");
+//        nn.printResults();
+//
+//        NN graspNn = new NN(false, incidenceMatrix);
+//        graspNn.executeAlgorithm();
+//        System.out.println("\nGRASP NN");
+//        graspNn.printResults();
+//
+//        GreedyCycle greedyCycle = new GreedyCycle(true, incidenceMatrix);
+//        greedyCycle.executeAlgorithm();
+//        System.out.println("\nGreedy Cycle");
+//        greedyCycle.printResults();
+//
+//        GreedyCycle graspGreedyCycle = new GreedyCycle(false, incidenceMatrix);
+//        graspGreedyCycle.executeAlgorithm();
+//        System.out.println("\nGRASP Greedy Cycle");
+//        graspGreedyCycle.printResults();
+//
+//        Rand rand = new Rand(incidenceMatrix);
+//        rand.executeAlgorithm();
+//        System.out.println("\nRandom");
+//        rand.printResults();
+//
+//        MultipleStartLocalSearch mlsl = new MultipleStartLocalSearch(new NN(false, incidenceMatrix));
+//        mlsl.executeAlgorithm();
+//        System.out.println("\nMultiple Start Local Search");
+//        mlsl.printResults();
+//
+//        IteratedLocalSearch ils = new IteratedLocalSearch(incidenceMatrix, (long)(mlsl.getResult().getAvgTime()*1000000), new NN(false, incidenceMatrix), 3);
+//        ils.executeAlgorithm();
+//        System.out.println("\nIterated Local Search");
+//        ils.printResults();
 
-        NN graspNn = new NN(false, incidenceMatrix);
-        graspNn.executeAlgorithm();
-        System.out.println("\nGRASP NN");
-        graspNn.printResults();
-
-        GreedyCycle greedyCycle = new GreedyCycle(true, incidenceMatrix);
-        greedyCycle.executeAlgorithm();
-        System.out.println("\nGreedy Cycle");
-        greedyCycle.printResults();
-
-        GreedyCycle graspGreedyCycle = new GreedyCycle(false, incidenceMatrix);
-        graspGreedyCycle.executeAlgorithm();
-        System.out.println("\nGRASP Greedy Cycle");
-        graspGreedyCycle.printResults();
-
-        Rand rand = new Rand(incidenceMatrix);
-        rand.executeAlgorithm();
-        System.out.println("\nRandom");
-        rand.printResults();
-
-        MultipleStartLocalSearch mlsl = new MultipleStartLocalSearch(new NN(false, incidenceMatrix));
-        mlsl.executeAlgorithm();
-        System.out.println("\nMultiple Start Local Search");
-        mlsl.printResults();
-
-        IteratedLocalSearch ils = new IteratedLocalSearch(incidenceMatrix, (long)(mlsl.getResult().getAvgTime()*1000000), new NN(false, incidenceMatrix), 3);
-        ils.executeAlgorithm();
-        System.out.println("\nIterated Local Search");
-        ils.printResults();
+        SimilarityExperiment similarityExperiment = new SimilarityExperiment(incidenceMatrix);
+        similarityExperiment.execute();
+        similarityExperiment.printResults();
     }
 }

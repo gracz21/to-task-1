@@ -1,7 +1,6 @@
 package algorithm.move;
 
 import model.Edge;
-import model.Vertex;
 
 import java.util.Collections;
 import java.util.List;

@@ -1,9 +1,7 @@
 package algorithm;
 
 import model.Edge;
-import model.Vertex;
 
-import java.util.LinkedList;
 import java.util.List;
 
 /**
