@@ -17,7 +17,7 @@ import java.util.stream.IntStream;
  */
 public class Hybrid {
     private Edge[][] incidenceMatrix;
-    private Rand rand;
+    private NN graspNN;
     private Random random;
     private LocalSearch localSearch;
     private SimilarityByNodes similarityByNodes;
@@ -30,7 +30,7 @@ public class Hybrid {
 
     public Hybrid(Edge[][] incidenceMatrix, long stopCondition) {
         this.incidenceMatrix = incidenceMatrix;
-        this.rand = new Rand(incidenceMatrix);
+        this.graspNN = new NN(false, incidenceMatrix);
         this.random = new Random();
         this.population = new HashMap<>();
         this.similarityByNodes = new SimilarityByNodes();
@@ -68,7 +68,7 @@ public class Hybrid {
             this.population.clear();
 
             while(population.size() < 20) {
-                Pair<List<Integer>, Integer> solution = rand.getSingleResultAfterLocalSearch();
+                Pair<List<Integer>, Integer> solution = graspNN.getSingleResultAfterLocalSearch();
                 if(!population.containsKey(solution.getValue())) {
                     population.put(solution.getValue(), solution.getKey());
                 }
