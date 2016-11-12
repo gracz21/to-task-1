@@ -9,6 +9,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -72,5 +73,10 @@ public class Main {
         long stopCondition = (long)10873*1000000;
         Hybrid hybrid = new Hybrid(incidenceMatrix, stopCondition);
         hybrid.executeAlgorithm();
+        try {
+            hybrid.printResultsToFile();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -5,6 +5,9 @@ import algorithm.similarity.SimilarityByNodes;
 import javafx.util.Pair;
 import model.Edge;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -15,6 +18,7 @@ import java.util.stream.IntStream;
 public class Hybrid {
     private Edge[][] incidenceMatrix;
     private Rand rand;
+    private Random random;
     private LocalSearch localSearch;
     private SimilarityByNodes similarityByNodes;
     private SimilarityByEdges similarityByEdges;
@@ -27,6 +31,8 @@ public class Hybrid {
     public Hybrid(Edge[][] incidenceMatrix, long stopCondition) {
         this.incidenceMatrix = incidenceMatrix;
         this.rand = new Rand(incidenceMatrix);
+        this.random = new Random();
+        this.population = new HashMap<>();
         this.similarityByNodes = new SimilarityByNodes();
         this.similarityByEdges = new SimilarityByEdges();
         this.localSearch = new LocalSearch(incidenceMatrix);
@@ -36,23 +42,30 @@ public class Hybrid {
         localSearchCosts = new LinkedList<>();
     }
 
-    public List<Long> getLocalSearchTimes() {
-        return localSearchTimes;
-    }
-
-    public List<Integer> getLocalSearchCosts() {
-        return localSearchCosts;
+    public void printResultsToFile() throws FileNotFoundException, UnsupportedEncodingException {
+        PrintWriter writer = new PrintWriter("hybrid_out.txt", "UTF-8");
+        writer.write("Min: " + this.result.getMin() + "\n");
+        writer.write("Avg: " + this.result.getAvg() + "\n");
+        writer.write("Max: " + this.result.getMax() + "\n");
+        writer.write("LS times\n");
+        for(int i = 0; i < localSearchTimes.size(); i++) {
+            writer.write(i + "\t" + localSearchTimes.get(i)/1000000 + "\n");
+        }
+        writer.write("LS costs\n");
+        for (int i = 0; i < localSearchCosts.size(); i++) {
+            writer.write(i + "\t" + localSearchCosts.get(i) + "\n");
+        }
+        writer.close();
     }
 
     public void executeAlgorithm() {
         long estimatedTime;
-        Random random = new Random();
         List<List<Integer>> parents = new ArrayList<>(2);
 
         for(int i = 0; i < 10; i++) {
             estimatedTime = 0;
             long startTime = System.nanoTime();
-            this.population = new HashMap<>();
+            this.population.clear();
 
             while(population.size() < 20) {
                 Pair<List<Integer>, Integer> solution = rand.getSingleResultAfterLocalSearch();
@@ -62,15 +75,14 @@ public class Hybrid {
             }
 
             while(estimatedTime <= this.stopCondition) {
-                parents.clear();
-                for(int j = 0; j < 2; j++) {
-                    //TODO filter na poprzedniego rodzica
-                    parents.add((List<Integer>)population.values().toArray()[random.nextInt(20)]);
-                }
+                findParents(parents);
 
                 Pair<Integer, List<Integer>> child = recombination(parents);
 
                 executeLocalSearch(child);
+                if(i == 0) {
+                    updateLocalSearchResults();
+                }
                 updatePopulation();
 
                 estimatedTime = System.nanoTime() - startTime;
@@ -81,6 +93,21 @@ public class Hybrid {
             result.updateResult(population.get(minCost), minCost);
             result.updateTimeResult(estimatedTime);
         }
+    }
+
+    private void findParents(List<List<Integer>> parents) {
+        parents.clear();
+        List<Integer> availableParentsIndexes = IntStream.range(0, population.size())
+                .boxed()
+                .collect(Collectors.toList());
+        int selectedParentIndex = availableParentsIndexes.get(random.nextInt(availableParentsIndexes.size()));
+        parents.add((List<Integer>)population.values().toArray()[selectedParentIndex]);
+
+        availableParentsIndexes = availableParentsIndexes.stream()
+                .filter(idx -> idx != selectedParentIndex)
+                .collect(Collectors.toList());
+        parents.add((List<Integer>)population.values().toArray()[
+                availableParentsIndexes.get(random.nextInt(availableParentsIndexes.size()))]);
     }
 
     private Pair<Integer, List<Integer>> recombination(List<List<Integer>> parents) {
@@ -160,14 +187,20 @@ public class Hybrid {
         localSearch.setSolution(child.getValue());
         localSearch.setCost(child.getKey());
         localSearch.executeAlgorithm();
+    }
+
+    private void updateLocalSearchResults() {
         localSearchCosts.add(localSearch.getCost());
         localSearchTimes.add(localSearch.getEstimatedTime());
     }
 
     private void updatePopulation() {
         if(!population.containsKey(localSearch.getCost())) {
-            population.remove(population.keySet().stream().max(Integer::compareTo).get());
-            population.put(localSearch.getCost(), localSearch.getSolution());
+            int maxCost = population.keySet().stream().max(Integer::compareTo).get();
+            if(localSearch.getCost() < maxCost) {
+                population.remove(maxCost);
+                population.put(localSearch.getCost(), localSearch.getSolution());
+            }
         }
     }
 }
