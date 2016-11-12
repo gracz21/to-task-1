@@ -65,8 +65,12 @@ public class Main {
 //        System.out.println("\nIterated Local Search");
 //        ils.printResults();
 
-        SimilarityExperiment similarityExperiment = new SimilarityExperiment(incidenceMatrix);
-        similarityExperiment.execute();
-        similarityExperiment.printResults();
+//        SimilarityExperiment similarityExperiment = new SimilarityExperiment(incidenceMatrix);
+//        similarityExperiment.execute();
+//        similarityExperiment.printResults();
+
+        long stopCondition = (long)10873*1000000;
+        Hybrid hybrid = new Hybrid(incidenceMatrix, stopCondition);
+        hybrid.executeAlgorithm();
     }
 }
